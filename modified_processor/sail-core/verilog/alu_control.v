@@ -122,8 +122,8 @@ module ALUControl(FuncCode, ALUCtl, Opcode);
 						ALUCtl = 7'b1010110; //BLTU conditions
 					3'b111:
 						ALUCtl = 7'b1100110; //BGEU conditions
-					default:
-						ALUCtl = `kSAIL_MICROARCHITECTURE_ALUCTL_6to0_ILLEGAL;
+					//default:
+					//	ALUCtl = `kSAIL_MICROARCHITECTURE_ALUCTL_6to0_ILLEGAL;
 				endcase
 
 			/*
