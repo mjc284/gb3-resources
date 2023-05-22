@@ -169,7 +169,7 @@ module cpu(
 	wire [31:0]		branch_predictor_mux_out;
 	wire			actual_branch_decision;
 	wire			mistake_trigger;
-	wire			decode_ctrl_mux_sel;
+	//wire			decode_ctrl_mux_sel;
 	wire			inst_mux_sel;
 
 	/*
@@ -240,11 +240,20 @@ module cpu(
 			.Fence(Fence_signal),
 			.CSRR(CSRR_signal)
 		);
-
+/*
 	mux2to1 cont_mux(
 			.input0({21'b0, Jalr1, ALUSrc1, Lui1, Auipc1, Branch1, MemRead1, MemWrite1, CSRR_signal, RegWrite1, MemtoReg1, Jump1}),
 			.input1(32'b0),
 			.select(decode_ctrl_mux_sel),
+			.out(cont_mux_out)
+		);*/
+
+	mux_control cont_mux(
+			.input0({21'b0, Jalr1, ALUSrc1, Lui1, Auipc1, Branch1, MemRead1, MemWrite1, CSRR_signal, RegWrite1, MemtoReg1, Jump1}),
+			//.input1(32'b0),
+			//.select(decode_ctrl_mux_sel),
+			.select1(pcsrc),
+			.select2(mistake_trigger),
 			.out(cont_mux_out)
 		);
 
@@ -436,7 +445,7 @@ module cpu(
 			.WB_fwd1(wfwd1),
 			.WB_fwd2(wfwd2)
 		);
-
+	
 	mux2to1 mem_fwd1_mux(
 			.input0(id_ex_out[75:44]),
 			.input1(dataMemOut_fwd_mux_out),
@@ -457,6 +466,7 @@ module cpu(
 			.select(wfwd1),
 			.out(wb_fwd1_mux_out)
 		);
+
 
 	mux2to1 wb_fwd2_mux(
 			.input0(mem_fwd2_mux_out),
@@ -508,7 +518,7 @@ module cpu(
 		);
 
 	//OR gate assignments, used for flushing
-	assign decode_ctrl_mux_sel = pcsrc | mistake_trigger;
+	//assign decode_ctrl_mux_sel = pcsrc | mistake_trigger;
 	assign inst_mux_sel = pcsrc | predict | mistake_trigger | Fence_signal;
 
 	//Instruction Memory Connections
