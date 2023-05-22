@@ -59,7 +59,7 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 	input [31:0]		A;
 	input [31:0]		B;
 	output reg [31:0]	ALUOut;
-	output 	reg	Branch_Enable;
+	output reg		Branch_Enable;
 
 	/*
 	 *	This uses Yosys's support for nonzero initial values:
@@ -74,9 +74,6 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 		ALUOut = 32'b0;
 		Branch_Enable = 1'b0;
 	end
-
-	//wire [31:0] alu_module_out;
-	//alu_module alu_module_inst(.mode(ALUctl[3:0]), .A(A), .B(B), .Out(alu_module_out));
 
 	always @(ALUctl, A, B) begin
 		case (ALUctl[3:0])
@@ -147,84 +144,6 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 		endcase
 	end
 
-	//always @(ALUctl, A, B) begin
-		
-	//	case (ALUctl[3:0])
-			/*
-			 *	AND (the fields also match ANDI and LUI)
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_AND:	ALUOut = alu_module_out;
-
-			/*
-			 *	OR (the fields also match ORI)
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_OR:	ALUOut = alu_module_out;
-		
-			/*
-			 *	ADD (the fields also match AUIPC, all loads, all stores, and ADDI)
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_ADD:	ALUOut = alu_module_out;
-
-			/*
-			 *	SUBTRACT (the fields also matches all branches)
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SUB:	ALUOut = alu_module_out;
-
-			/*
-			 *	SLT (the fields also matches all the other SLT variants)
-			 */
-	//		`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SLT:	ALUOut = {31'b0, alu_module_out[31]};//$signed(A) < $signed(B) ? 32'b1 : 32'b0;
-
-			/*
-			 *	SRL (the fields also matches the other SRL variants)
-			 */
-	//		`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SRL:	ALUOut = A >> B[4:0];
-
-			/*
-			 *	SRA (the fields also matches the other SRA variants)
-			 */
-	//		`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SRA:	ALUOut = $signed(A) >>> B[4:0];
-
-			/*
-			 *	SLL (the fields also match the other SLL variants)
-			 */
-	//		`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SLL:	ALUOut = A << B[4:0];
-
-			/*
-			 *	XOR (the fields also match other XOR variants)
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_XOR:	ALUOut = alu_module_out;
-
-			/*
-			 *	CSRRW  only
-			 */
-	//		`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_CSRRW:	ALUOut = A;
-
-			/*
-			 *	CSRRS only
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_CSRRS:	ALUOut = alu_module_out;
-
-			/*
-			 *	CSRRC only
-			 */
-			//`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_CSRRC:	ALUOut = alu_module_out;
-
-			/*
-			 *	Should never happen.
-			 */
-	//		default:					ALUOut = alu_module_out;
-	//	endcase
-	//end
-/*
-	assign Branch_Enable = (ALUctl[6:4] == `kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BEQ) ? (ALUOut == 0):
-						   (ALUctl[6:4] == `kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BNE) ? !(ALUOut == 0):
-						   (ALUctl[6:4] == `kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BLT) ? ($signed(A) < $signed(B)):
-						   (ALUctl[6:4] == `kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BGE) ? ($signed(A) >= $signed(B)):
-						   (ALUctl[6:4] == `kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BLTU) ? ($unsigned(A) < $unsigned(B)):
-						   (ALUctl[6:4] == `kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BGEU) ? ($unsigned(A) >= $unsigned(B)): 1'b0;
-	*/
-	
 	always @(ALUctl, ALUOut, A, B) begin
 		case (ALUctl[6:4])
 			`kSAIL_MICROARCHITECTURE_ALUCTL_6to4_BEQ:	Branch_Enable = (ALUOut == 0);
@@ -237,5 +156,4 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 			default:					Branch_Enable = 1'b0;
 		endcase
 	end
-	
 endmodule
