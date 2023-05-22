@@ -61,7 +61,7 @@ module cpu(
 	/*
 	 *	instruction memory input
 	 */
-	output [31:0]		inst_mem_in;
+	output [29:0]		inst_mem_in;
 	input [31:0]		inst_mem_out;
 
 	/*
@@ -77,12 +77,12 @@ module cpu(
 	/*
 	 *	Program Counter
 	 */
-	wire [31:0]		pc_mux0;
-	wire [31:0]		pc_in;
-	wire [31:0]		pc_out;
+	wire [29:0]		pc_mux0;
+	wire [29:0]		pc_in;
+	wire [29:0]		pc_out;
 	wire			pcsrc;
 	wire [31:0]		inst_mux_out;
-	wire [31:0]		fence_mux_out;
+	wire [29:0]		fence_mux_out;
 
 	/*
 	 *	Pipeline Registers
@@ -163,10 +163,10 @@ module cpu(
 	/*
 	 *	Branch Predictor
 	 */
-	wire [31:0]		pc_adder_out;
-	wire [31:0]		branch_predictor_addr;
+	wire [29:0]		pc_adder_out;
+	wire [29:0]		branch_predictor_addr;
 	wire			predict;
-	wire [31:0]		branch_predictor_mux_out;
+	wire [29:0]		branch_predictor_mux_out;
 	wire			actual_branch_decision;
 	wire			mistake_trigger;
 	//wire			decode_ctrl_mux_sel;
@@ -175,9 +175,9 @@ module cpu(
 	/*
 	 *	Instruction Fetch Stage
 	 */
-	mux2to1 pc_mux(
+	mux_small pc_mux(
 			.input0(pc_mux0),
-			.input1(ex_mem_out[72:41]),
+			.input1(ex_mem_out[72:43]),
 			.select(pcsrc),
 			.out(pc_in)
 		);
@@ -206,7 +206,7 @@ module cpu(
 			.out(inst_mux_out)
 		);
 
-	mux2to1 fence_mux(
+	mux_small fence_mux(
 			.input0(pc_adder_out),
 			.input1(pc_out),
 			.select(Fence_signal),
@@ -218,7 +218,7 @@ module cpu(
 	 */
 	if_id if_id_reg(
 			.clk(clk),
-			.data_in({inst_mux_out, pc_out}),
+			.data_in({inst_mux_out, pc_out, 2'b0}),
 			.data_out(if_id_out)
 		);
 
@@ -494,16 +494,16 @@ module cpu(
 			.prediction(predict)
 		);
 
-	mux2to1 branch_predictor_mux(
+	mux_small branch_predictor_mux(
 			.input0(fence_mux_out),
 			.input1(branch_predictor_addr),
 			.select(predict),
 			.out(branch_predictor_mux_out)
 		);
 
-	mux2to1 mistaken_branch_mux(
+	mux_small mistaken_branch_mux(
 			.input0(branch_predictor_mux_out),
-			.input1(id_ex_out[43:12]),
+			.input1(id_ex_out[43:14]),
 			.select(mistake_trigger),
 			.out(pc_mux0)
 		);

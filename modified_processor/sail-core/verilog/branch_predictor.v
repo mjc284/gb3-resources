@@ -64,7 +64,7 @@ module branch_predictor(
 	/*
 	 *	outputs
 	 */
-	output [31:0]	branch_addr;
+	output [29:0]	branch_addr;
 	output		prediction;
 
 	/*
@@ -105,6 +105,6 @@ module branch_predictor(
 		end
 	end
 
-	assign branch_addr = in_addr + offset;
+	assign branch_addr = in_addr[31:2] + offset[31:2];
 	assign prediction = s[1] & branch_decode_sig;
 endmodule

@@ -46,8 +46,8 @@
 
 module program_counter(inAddr, outAddr, clk);
 	input			clk;
-	input [31:0]		inAddr;
-	output reg[31:0]	outAddr;
+	input [29:0]		inAddr;
+	output reg[29:0]	outAddr;
 
 	/*
 	 *	This uses Yosys's support for nonzero initial values:
@@ -59,7 +59,7 @@ module program_counter(inAddr, outAddr, clk);
 	 *	modules in the design.
 	 */
 	initial begin
-		outAddr = 32'b0;
+		outAddr = 29'b0;
 	end
 
 	always @(posedge clk) begin

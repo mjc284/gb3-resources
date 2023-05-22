@@ -64,7 +64,7 @@ module top (led);
 	/*
 	 *	Memory interface
 	 */
-	wire[31:0]	inst_in;
+	wire[29:0]	inst_in;
 	wire[31:0]	inst_out;
 	wire[31:0]	data_out;
 	wire[31:0]	data_addr;
