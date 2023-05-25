@@ -188,7 +188,7 @@ module cpu(
 			.out(pc_adder_out)
 		);
 	*/
-	adder_4 pc_adder(
+	adder_1 pc_adder(
 			.input1(pc_out),
 			.out(pc_adder_out)
 		);

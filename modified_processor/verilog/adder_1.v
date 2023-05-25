@@ -1,4 +1,4 @@
-module adder_4(input1, out);
+module adder_1(input1, out);
 	input [29:0]	input1;
 	output [29:0]	out;
 
