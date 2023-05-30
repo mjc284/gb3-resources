@@ -6,9 +6,9 @@ module pll(
 
 SB_PLL40_PAD #(
 		.FEEDBACK_PATH("SIMPLE"),
-		.DIVR(4'd13),		// DIVR = 13
-		.DIVF(7'd7),	    // DIVF = 7
-		.DIVQ(3'd0),		// DIVQ = 0  -> 27/13*7 = 14.538...
+		.DIVR(4'd0),		// DIVR = 15
+		.DIVF(7'd32),	    // DIVF = 31
+		.DIVQ(3'd5),		// DIVQ = 4  -> 27x31/15/4 = 13.95...
 		.FILTER_RANGE(3'b001)	// FILTER_RANGE = 1
 	) uut (
 		.LOCK(locked),      // Indicates if PLL is locked

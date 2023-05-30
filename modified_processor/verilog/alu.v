@@ -61,6 +61,16 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 	output reg [31:0]	ALUOut;
 	output reg		Branch_Enable;
 
+	wire [31:0]		adder_dsp_output;
+
+	wire addorsub = ALUctl[2];
+	dsp		dsp_inst(
+						.input1(A),
+						.input2(B),
+						.addorsub(addorsub),
+						.out(adder_dsp_output)
+						);
+
 	/*
 	 *	This uses Yosys's support for nonzero initial values:
 	 *
@@ -90,12 +100,12 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 			/*
 			 *	ADD (the fields also match AUIPC, all loads, all stores, and ADDI)
 			 */
-			`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_ADD:	ALUOut = A + B;
+			`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_ADD:	ALUOut = adder_dsp_output;//A + B;
 
 			/*
 			 *	SUBTRACT (the fields also matches all branches)
 			 */
-			`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SUB:	ALUOut = A - B;
+			`kSAIL_MICROARCHITECTURE_ALUCTL_3to0_SUB:	ALUOut = adder_dsp_output;//A - B;
 
 			/*
 			 *	SLT (the fields also matches all the other SLT variants)
