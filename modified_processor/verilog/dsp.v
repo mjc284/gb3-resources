@@ -10,7 +10,7 @@ module dsp (
 			.TOPOUTPUT_SELECT(2'b00), // Adder, unregistered
 			.TOPADDSUB_LOWERINPUT(2'b00), // Input A
 			.TOPADDSUB_UPPERINPUT(1'b1), // Input C	
-			.TOPADDSUB_CARRYSELECT(2'b11), // Cascade CO from lower Adder
+			.TOPADDSUB_CARRYSELECT(2'b10), // Cascade ACCUMOUT from lower Adder
 			.BOTOUTPUT_SELECT(2'b00), // Adder, unregistered
 			.BOTADDSUB_LOWERINPUT(2'b00), // Input B
 			.BOTADDSUB_UPPERINPUT(1'b1), // Input D

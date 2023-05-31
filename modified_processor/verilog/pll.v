@@ -6,8 +6,8 @@ module pll(
 
 SB_PLL40_PAD #(
 		.FEEDBACK_PATH("SIMPLE"),
-		.DIVR(4'd0),		// DIVR = 15
-		.DIVF(7'd32),	    // DIVF = 31
+		.DIVR(4'd1),		// DIVR = 15
+		.DIVF(7'd60),	    // DIVF = 31
 		.DIVQ(3'd5),		// DIVQ = 4  -> 27x31/15/4 = 13.95...
 		.FILTER_RANGE(3'b001)	// FILTER_RANGE = 1
 	) uut (
