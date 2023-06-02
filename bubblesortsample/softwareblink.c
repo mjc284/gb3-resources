@@ -38,7 +38,7 @@ int main(void) {
   }
 
   // Turn Off LED
-	*gDebugLedsMemoryMappedRegister = 0x0;
+	//*gDebugLedsMemoryMappedRegister = 0x0;
 
   // Turn On LED if Sort is Wrong
   for (i = 0; i < maxindex; i++) 
@@ -136,9 +136,9 @@ int main(void) {
 	}
 
   // Turn On LED if Arithmetic Operation is Wrong
-	if(error == 1)
+	if(error != 1)
 	{
-		*gDebugLedsMemoryMappedRegister = 0xFF;
+		*gDebugLedsMemoryMappedRegister = 0x00;
 	}
 
 
