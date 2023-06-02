@@ -60,14 +60,14 @@ module top (led, clk_in);
 	 *	Use the iCE40's hard primitive for the clock source.
 	 */
 	 
-	 
+	 /*
 	SB_HFOSC #(.CLKHF_DIV("0b10")) OSCInst0 (
 		.CLKHFEN(ENCLKHF),
 		.CLKHFPU(CLKHF_POWERUP),
 		.CLKHF(clk)
 	);
-	
-/*
+	*/
+
 	pll pll_inst (
 		.clk_in(clk_in),
 		.clk_out(clk_raw),
@@ -81,7 +81,7 @@ module top (led, clk_in);
 	end
 
 	assign clk = reg_clk[0] | !locked;//reg_clk[0];
-	*/
+	//assign led[0] = clk;
 
 /*
 	reg [36:0] test = 37'b0;

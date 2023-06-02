@@ -65,8 +65,8 @@ module alu(ALUctl, A, B, ALUOut, Branch_Enable);
 
 	wire addorsub = ALUctl[2];
 	dsp		dsp_inst(
-						.input1(A),
-						.input2(B),
+						.input1(B),
+						.input2(A),
 						.addorsub(addorsub),
 						.out(adder_dsp_output)
 						);

@@ -20,7 +20,10 @@ int main(void) {
   int i;
   int maxindex = bsort_input_len - 1;
 
+  // Turn On LED
   *gDebugLedsMemoryMappedRegister = 0xFF;
+
+  // Sort Array
   while (maxindex > 0) {
    // *gDebugLedsMemoryMappedRegister = ~(*gDebugLedsMemoryMappedRegister);
     for (i = 0; i < maxindex; i++) {
@@ -31,15 +34,115 @@ int main(void) {
         bsort_input[i] ^= bsort_input[i + 1];
       }
     }
-
     maxindex--;
   }
 
-  	for (i = 0; i < maxindex; i++) {
+  // Turn Off LED
+	*gDebugLedsMemoryMappedRegister = 0x0;
+
+  // Turn On LED if Sort is Wrong
+  for (i = 0; i < maxindex; i++) 
+  {
 		if(bsort_input[i] > bsort_input[i + 1])
-			*gDebugLedsMemoryMappedRegister = 0x0;
+			*gDebugLedsMemoryMappedRegister = 0xFF;
 	}
 
+  // Check Arithmetic Operations
+  int a = 5;
+	int b = 2;
+	int t1 = a + b;
+	int t2 = a - b;
+	int t3 = a << b;
+	int t4 = a >> b;
+	int t5 = (a > b);
+	int t6 = (a == b);
+	int t7 = (a < b);
+	int dummy = 5;
+
+	int error = 0;
+	
+	if(t1 == 7)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	
+	if(t2 == 3)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	if(t3 == 20)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	if(t4 == 1)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	if(t5 == 1)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	if(t6 == 0)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	if(t7 == 0)
+	{
+		dummy = 0;
+	}
+	else
+	{
+		error = 1;
+	}
+
+	if(a == b)
+	{
+		error = 1;
+	}
+
+	if(b > a)
+	{
+		error = 1;
+	}
+
+  // Turn On LED if Arithmetic Operation is Wrong
+	if(error == 1)
+	{
+		*gDebugLedsMemoryMappedRegister = 0xFF;
+	}
+
+
+  // End Program
 	while(1)
 	{
 
