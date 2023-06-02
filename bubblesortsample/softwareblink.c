@@ -37,14 +37,14 @@ int main(void) {
     maxindex--;
   }
 
-  // Turn Off LED
-	//*gDebugLedsMemoryMappedRegister = 0x0;
+  int error = 0;
 
-  // Turn On LED if Sort is Wrong
+  // Check if Sort is Wrong
   for (i = 0; i < maxindex; i++) 
   {
 		if(bsort_input[i] > bsort_input[i + 1])
-			*gDebugLedsMemoryMappedRegister = 0xFF;
+      error = 1;
+			//*gDebugLedsMemoryMappedRegister = 0xFF;
 	}
 
   // Check Arithmetic Operations
@@ -59,7 +59,7 @@ int main(void) {
 	int t7 = (a < b);
 	int dummy = 5;
 
-	int error = 0;
+	
 	
 	if(t1 == 7)
 	{
