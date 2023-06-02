@@ -135,7 +135,7 @@ int main(void) {
 		error = 1;
 	}
 
-  // Turn On LED if Arithmetic Operation is Wrong
+  // Turn Off LED if no Errors
 	if(error != 1)
 	{
 		*gDebugLedsMemoryMappedRegister = 0x00;
